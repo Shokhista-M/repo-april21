@@ -1,7 +1,17 @@
+variable "prefix" {
+    type = string
+}
+variable "vpc_cidr_block" {
+    type = string
+}
+variable "subnet_cidr_block" {
+    type = string
+}
+ 
 resource "aws_vpc" "main" {
-    cidr_block = "10.0.0.0/16"
+    cidr_block = var.vpc_cidr_block
     tags = {
-        Name = "fred-vpc"
+        Name = join("-", ["vpc", var.prefix])
     }
 }
 
@@ -10,6 +20,6 @@ resource "aws_subnet" "main" {
     cidr_block = "10.0.1.0/24"
 
     tags ={
-        Name = "fred-subnet"
+        Name = join("-", ["subnet", var.prefix])
     }
 }
